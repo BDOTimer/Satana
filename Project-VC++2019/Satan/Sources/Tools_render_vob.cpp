@@ -52,6 +52,7 @@ std::string find_into_vob(std::string s)
         if(size != size_must)
         {   std::cout << "ERROR: file \"" << name
                       << "\" don't 100% build ...\n";
+            f.clear();
             return f;
         }
     }
