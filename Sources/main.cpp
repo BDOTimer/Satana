@@ -110,8 +110,17 @@ bool find(const std::string& pi, const std::string key)
 /// Старт.
 ///----------------------------------------------------------------------------:
 int main()
-{   setlocale(0, "");
+{
+    win::setname();
+    setlocale(0, "");
     //system   ("mode 80,50");
+
+    win::Color(14);
+    BANNER(
+        "///-------------------------|",
+        "/// Render числа PI.        |",
+        "///-------------------------:")
+    win::Color();
 
     CFG = load_config();
     const int AMOUNT_ITERATIONS = CFG->AMOUNT_ITERATIONS;
@@ -224,10 +233,12 @@ int main()
                    << L"Render PI отменён ...\n\n";
     }
 
+    win::Color(14);
     BANNER(
         "///-------------------------|",
         "/// Render словаря Сатаны.  |",
         "///-------------------------:")
+    win::Color();
          Tools_render_vob();
 
     std::cout << win::Color(2) << "\nProgram FINISHED.\n\n";

@@ -21,6 +21,9 @@ namespace win
     {       Color(WORD text){   set(text);}
             Color(         ){   set(    );}
     };
+    inline void setname()
+    {   SetConsoleTitleW(L"Тайна числа ПИ");
+    }
 };
 inline std::ostream& operator<<(std::ostream& o, const win::Color c){ return o;}
 inline std::wostream&operator<<(std::wostream&o, const win::Color c){ return o;}
