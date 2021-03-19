@@ -1,7 +1,7 @@
 # Satana
 
 Тема на киберфоруме:
-https://www.cyberforum.ru/contests/thread2787489.html
+[www.cyberforum.ru](https://www.cyberforum.ru/contests/thread2787489.html)
  
 1. Был использован алгоритм Брента — Саламина. Программа сначала писалась под MSYS10 + GMP, пока не стало ясно, что точности long в mpf_set_default_prec(AMOUNT_BIT) для решения задачи не достаточно. Поэтому было принято решение переползти на MPIR, который очень хорошо дружит с VC++. Отсюда возник тандем VC++2019 + MPIR
 
