@@ -115,6 +115,8 @@ int main()
     setlocale(0, "");
     //system   ("mode 80,50");
 
+    CFG = load_config();
+
     win::Color(14);
     BANNER(
         "///-------------------------|",
@@ -122,7 +124,6 @@ int main()
         "///-------------------------:")
     win::Color();
 
-    CFG = load_config();
     const int AMOUNT_ITERATIONS = CFG->AMOUNT_ITERATIONS;
     std::string file_name = "pi_Legendre.txt";
 

@@ -103,9 +103,9 @@ inline const Config* load_config()
     if(!cfg.is_visible) return &cfg;
 
     BANNER(
-    "///----------------------------|",
-    "/// Загруженный конфиг.        |",
-    "///----------------------------:")
+    "///-------------------------|",
+    "/// Загруженный конфиг.     |",
+    "///-------------------------:")
         l(cfg.AMOUNT_ITERATIONS)
         l(cfg.is_skip_hand_test)
         l(cfg.LENGTH)
