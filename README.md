@@ -78,3 +78,8 @@ Time operation: 1:10:25
 
 Итого, не  хватает ещё `244` числа.
 Возможно увеличние **`cfg.AMOUNT_ITERATIONS`** до **`30`** будет достаточно.
+
+____
+## Полезные ссылки:
+
+[Pi - Chudnovsky](https://www.craig-wood.com/nick/articles/pi-chudnovsky/)
