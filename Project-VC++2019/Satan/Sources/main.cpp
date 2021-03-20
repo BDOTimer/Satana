@@ -36,7 +36,7 @@
 ///---------------------------------------.
 
 #include "config.h"
-const Config* CFG;
+const Config* CFG = nullptr;
 Timer TIMER;
 
 void Tools_render_vob();
@@ -119,10 +119,10 @@ int main()
 
     win::Color(14);
     BANNER(
-        "///-------------------------|",
-        "/// Render числа PI.        |",
-        "///-------------------------:")
-    win::Color();
+        "///-----------------------------|",
+        "/// Render числа PI.            |",
+        "///-----------------------------:")
+        COLORRESET;
 
     const int AMOUNT_ITERATIONS = CFG->AMOUNT_ITERATIONS;
     std::string file_name = "pi_Legendre.txt";
@@ -171,7 +171,7 @@ int main()
                 if (i >= 0)
                 {   std::wcout  << L" (Прогноз на оставшееся время: "
                                 << timer2.second_to_display(
-                                   timer2.get_delta_seconds() * (i + i)) << ")"
+                                   timer2.get_delta_seconds() * (i+2)) << ")"
                                 << "     ";
                 }
                 else std::wcout << L" Всё нормально - добавка для точности ...";
@@ -236,11 +236,11 @@ int main()
 
     win::Color(14);
     BANNER(
-        "///-------------------------|",
-        "/// Render словаря Сатаны.  |",
-        "///-------------------------:")
-    win::Color();
-         Tools_render_vob();
+        "///-----------------------------|",
+        "/// Render словаря Сатаны.      |",
+        "///-----------------------------:")
+        COLORRESET;
+        Tools_render_vob();
 
     std::cout << win::Color(2) << "\nProgram FINISHED.\n\n";
     while(std::cin.get());

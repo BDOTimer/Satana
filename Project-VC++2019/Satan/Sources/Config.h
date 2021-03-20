@@ -35,12 +35,13 @@ const Config cfg_default =
     true
 };
 
-const Config* load_config();
+extern const Config* CFG;
+       const Config* load_config();
 
 #define  l(v)  std::cout << std::setw(22) << #v << " = " << v << "\n";
 
 ///-------------------------------|
-/// Это можно спятать в .cpp      |
+/// Это можно спрятать в .cpp     |
 ///-------------------------------:
 #include <iostream>
 #include <string>
@@ -111,7 +112,6 @@ inline const Config* load_config()
         l(cfg.LENGTH)
         l(cfg.is_rewrite_pi_file)
         l(cfg.is_visible)
-
 
     std::cout << '\n';
     return &cfg;

@@ -22,7 +22,10 @@ namespace win
             Color(         ){   set(    );}
     };
     inline void setname()
-    {   SetConsoleTitleW(L"Тайна числа ПИ");
+    {   SetConsoleTitleW(L"Тайны числа ПИ");
+        HWND  hwnd = GetConsoleWindow();
+        SetWindowLong(hwnd, GWL_STYLE , WS_CAPTION | WS_SIZEBOX);
+        ShowWindow(hwnd, SW_NORMAL);
     }
 };
 inline std::ostream& operator<<(std::ostream& o, const win::Color c){ return o;}

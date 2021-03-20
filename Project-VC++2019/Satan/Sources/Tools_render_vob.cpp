@@ -8,7 +8,6 @@
 #include <cmath>
 
 #include "config.h"
-extern const Config* CFG;
 
 size_t get_size_file(std::ifstream& f)
 {   f.seekg  (0, std::ios::end);
@@ -43,7 +42,7 @@ std::string find_into_vob(std::string s)
 
     {   size_t size      = get_size_file(fromf);
         size_t size_must = (size_t)std::pow(10, CFG->LENGTH)
-                         * (CFG->LENGTH * 2 + 3) + STARTOFFSET;
+                         * (CFG->LENGTH + 2) + STARTOFFSET;
 
         //l(size)
         //l(size_must)
@@ -69,9 +68,9 @@ std::string find_into_vob(std::string s)
 
     try
     {   size_t number = std::stoi(s);
-        fromf.seekg(STARTOFFSET  + number * (CFG->LENGTH * 2 + 3));
-        f.resize(CFG->LENGTH * 2 + 1, 'x');
-        fromf.read((char*)f.data(), CFG->LENGTH * 2 + 1);
+        fromf.seekg(STARTOFFSET  + number * (CFG->LENGTH + 2));
+        f.resize(CFG->LENGTH, 'x');
+        fromf.read((char*)f.data(), CFG->LENGTH);
     }
     catch(...)
     {   std::cout << "ERROR INPUT: " << s << "\n\n";
@@ -132,8 +131,8 @@ void Tools_render_vob()
 
     std::map<std::string, std::string> cargo;
     size_t now = 0;
-
     size_t last_num;
+    bool   ALL;
 
     TIMER.start();
     for    (size_t j = 5000, i = LENGTH; j < N; j += 5000)
@@ -153,14 +152,14 @@ void Tools_render_vob()
                   << cargo.size() - now << "                  ";
         now = cargo.size();
 
-        if(cargo.size() == NEED)
+        if(ALL = cargo.size() == NEED)
         {   std::cout << win::Color(14) << "\n\nFind ALL pair !!!\n";
             COLORRESET;
             break;
         }
     }
-    std::cout << '\n';
-    std::cout << "\nEfficiency: " << (100./NEED)*cargo.size() << "%\n\n";
+
+    std::cout << "\nEfficiency: " << (100./NEED)*cargo.size() << "%\n";
     TIMER.info();
 
     std::wcout << L"Последнее найденное число: ";
@@ -174,22 +173,28 @@ void Tools_render_vob()
                 tof_name += std::to_string(LENGTH) + ".txt";
 
     BANNER(
-    "///----------------------------|",
-    "/// Сохраняем в файл.          |",
-    "///----------------------------:")
-    {   std::ofstream tof(tof_name);
-                      tof << "Satan --> password" << '\n';
-        for(const auto& v : cargo)
-        {   tof << v.first << ' ' << v.second << '\n';
+    "///--------------------------|",
+    "/// Сохраняем в файл.        |",
+    "///--------------------------:")
+    if (ALL)
+    {
+        {   std::ofstream tof(tof_name);
+            tof << "Password of Satan" << '\n';
+            for (const auto& v : cargo)
+            {   tof << v.second << '\n';
+            }
+            std::wcout << L"Файл \"" << tof_name.c_str() << L"\" создан.\n\n";
         }
-    }
-    std::wcout << L"Файл \"" << tof_name.c_str() << L"\" создан.\n\n";
 
-    BANNER(
-    "///-------------------------|",
-    "/// Ручной поиск в словаре. |",
-    "///-------------------------:")
-    std::cout << "Press ESCAPE for stop ...\n";
-    std::string spec_input();
-    while (test_Find_into_vob(spec_input()));
+        BANNER(
+        "///-------------------------|",
+        "/// Ручной поиск в словаре. |",
+        "///-------------------------:")
+        std::cout << "Press ESCAPE for stop ...\n";
+        std::string spec_input();
+        while (test_Find_into_vob(spec_input()));
+    }
+    else std::wcout << win::Color(12)
+                    << L"WARNING: Файл НЕПОЛНЫЙ - создание отменено ...\n\n"
+                    << win::Color( );
 }
