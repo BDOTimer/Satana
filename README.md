@@ -97,4 +97,5 @@ ____
 ____
 ## Полезные ссылки:
 
-[Pi - Chudnovsky](https://www.craig-wood.com/nick/articles/pi-chudnovsky/)
+[Pi - Chudnovsky](https://www.craig-wood.com/nick/articles/pi-chudnovsky/)    
+[mpir.org](https://mpir.org/)    
