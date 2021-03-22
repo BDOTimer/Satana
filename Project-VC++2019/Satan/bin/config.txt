@@ -1,15 +1,15 @@
 ///-------------------|
 /// Render PI.        |
 ///-------------------:
-AMOUNT_ITERATIONS  = 29 /// 2^AMOUNT_ITERATIONS = размер ПИ в битах.
+AMOUNT_ITERATIONS  = 29 /// 2 ^ AMOUNT_ITERATIONS = размер ПИ в битах.
 
 ///-------------------|
 /// Build vob.        |
 ///-------------------:
-LENGTH             = 8 ///     Длина ключа.
-is_rewrite_pi_file = 0 /// 1 - Перезаписывать pi_Legendre.txt
+LENGTH             = 8  ///     Длина ключа.
+is_rewrite_pi_file = 0  /// 1 - Перезаписывать pi_Legendre.txt
 
 ///-------------------|
 /// Конфиг.           |
 ///-------------------:
-is_visible         = 1 /// 1 - Показать загруженный конфиг.
+is_visible         = 1  /// 1 - Показать загруженный конфиг.
