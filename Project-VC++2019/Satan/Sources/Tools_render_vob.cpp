@@ -90,6 +90,8 @@ bool test_Find_into_vob(std::string s)
     return true;
 }
 
+#include "key_pass.inl"
+
 ///----------------------------------------------------------------------------|
 /// Старт.
 ///----------------------------------------------------------------------------:
@@ -103,87 +105,117 @@ void Tools_render_vob()
 
 	std::cout << "LENGTH = " << LENGTH << '\n';
 
-    std::string s;
-    {   std::ifstream f(NAME_FILE);
-        if(!f.is_open())
-        {   std::cout << "ERROR FILE " << NAME_FILE << '\n';
-        	std::cin.get();
-            return;
-        }
-
-        s.reserve(get_size_file(f)+1);
-        std::getline(f, s, '\f');
-    }
-
-    const size_t N = s.size();
-
-    ///---------------------------------------------|
-    /// Тулза для очистки файла от пробелов и т.п.. |
-    ///---------------------------------------------:
-    if(false) ///<<<---true: включить.
-    {   std::ofstream tof(NAME_FILE);
-        for(auto i = s.begin(); i != s.end(); ++i)
-        {   if( '0' <= *i && *i <= '9') tof << *i;
-        }
-    }
-
-    const unsigned NEED = (unsigned)std::pow(10, LENGTH);
-
-    std::map<std::string, std::string> cargo;
-    size_t now = 0;
-    size_t last_num;
-    bool   ALL;
-
-    TIMER.start();
-    for    (size_t j = 5000, i = LENGTH; j < N; j += 5000)
-    {   for(                           ; i < j;   ++ i   )
-        {   if(false)
-                cargo[s.substr(i, LENGTH)] = s.substr(i-LENGTH, LENGTH);
-            else if(cargo.find(s.substr(i, LENGTH)) == cargo.end())
-            {   cargo[s.substr(i, LENGTH)] = s.substr(i-LENGTH, LENGTH);
-                last_num = i;
-            }
-        }
-
-        std::cout << "\rFIND: ";
-        std::cout << win::Color(10) << cargo.size() << COLORRESET;;
-
-        std::cout << " (from:"  << NEED << ")" << " Progress last iteration: +"
-                  << cargo.size() - now << "                  ";
-        now = cargo.size();
-
-        if(ALL = cargo.size() == NEED)
-        {   std::cout << win::Color(14) << "\n\nFind ALL pair !!!\n";
-            COLORRESET;
-            break;
-        }
-    }
-
-    std::cout << "\nEfficiency: " << (100./NEED)*cargo.size() << "%\n";
-    TIMER.info();
-
-    std::wcout << L"Последнее найденное число: ";
-    std::cout  << win::Color(10) << s.substr(last_num, LENGTH) << COLORRESET;;
-
-    std::wcout << L" на позиции ";
-    std::cout  << win::Color(10) << last_num << '\n' << COLORRESET;;
-
-    std::cout << '\n';
     std::string tof_name("satan_vob_");
                 tof_name += std::to_string(LENGTH) + ".txt";
 
-    BANNER(
-    "///--------------------------|",
-    "/// Сохраняем в файл.        |",
-    "///--------------------------:")
-    if (ALL)
+    bool is_exist_vob = false;
+    {   std::ifstream ff(tof_name);
+        is_exist_vob = ff.is_open();
+    }
+
+    bool ALL = false;
+    std::map<std::string, std::string> cargo;
+
+    if (!is_exist_vob)
     {
-        {   std::ofstream tof(tof_name);
+
+        std::string s;
+        {   std::ifstream f(NAME_FILE);
+        if (!f.is_open())
+        {
+            std::cout << "ERROR FILE " << NAME_FILE << '\n';
+            std::cin.get();
+            return;
+        }
+
+        s.reserve(get_size_file(f) + 1);
+        std::getline(f, s, '\f');
+        }
+
+        const size_t N = s.size();
+
+        ///---------------------------------------------|
+        /// Тулза для очистки файла от пробелов и т.п.. |
+        ///---------------------------------------------:
+        if (false) ///<<<---true: включить.
+        {
+            std::ofstream tof(NAME_FILE);
+            for (auto i = s.begin(); i != s.end(); ++i)
+            {
+                if ('0' <= *i && *i <= '9') tof << *i;
+            }
+        }
+
+        const unsigned NEED = (unsigned)std::pow(10, LENGTH);
+
+        ///------------|
+        /// Хак для 29.|
+        ///------------:
+        load_244(cargo);
+
+        size_t now = 0;
+        size_t last_num;
+
+        TIMER.start();
+        for (size_t j = 5000, i = LENGTH; j < N; j += 5000)
+        {
+            for (; i < j; ++i)
+            {
+                if (false)
+                    cargo[s.substr(i, LENGTH)] = s.substr(i - LENGTH, LENGTH);
+                else if (cargo.find(s.substr(i, LENGTH)) == cargo.end())
+                {
+                    cargo[s.substr(i, LENGTH)] = s.substr(i - LENGTH, LENGTH);
+                    last_num = i;
+                }
+            }
+
+            std::cout << "\rFIND: ";
+            std::cout << win::Color(10) << cargo.size() << COLORRESET;;
+
+            std::cout << " (from:" << NEED << ")" 
+                      << " Progress last iteration: +"
+                      << cargo.size() - now << "                  ";
+            now = cargo.size();
+
+            ALL = cargo.size() == NEED;
+            if (ALL)
+            {
+                std::cout << win::Color(14) << "\nFind ALL pair !!!";
+                COLORRESET;
+                break;
+            }
+        }
+
+        std::cout << "\nEfficiency: " << (100. / NEED) * cargo.size() << "%\n";
+        TIMER.info();
+
+        std::wcout << L"Последнее найденное число: ";
+        std::cout << win::Color(10) << s.substr(last_num, LENGTH) << COLORRESET;
+
+        std::wcout << L" на позиции ";
+        std::cout << win::Color(10) << last_num << '\n' << COLORRESET;;
+
+        std::cout << '\n';
+    }
+    else std::wcout << L"WARNING: Полный словарь уже существует...\n\n";
+
+    if (ALL || is_exist_vob)
+    {
+        if(!is_exist_vob)
+        {
+            BANNER(
+                "///--------------------------|",
+                "/// Сохраняем в файл.        |",
+                "///--------------------------:")
+            TIMER.start();
+            std::ofstream tof(tof_name);
             tof << "Password of Satan" << '\n';
             for (const auto& v : cargo)
             {   tof << v.second << '\n';
             }
             std::wcout << L"Файл \"" << tof_name.c_str() << L"\" создан.\n\n";
+            TIMER.info();
         }
 
         BANNER(
@@ -195,6 +227,6 @@ void Tools_render_vob()
         while (test_Find_into_vob(spec_input()));
     }
     else std::wcout << win::Color(12)
-                    << L"WARNING: Файл НЕПОЛНЫЙ - создание отменено ...\n\n"
+                    << L"ERROR: Файл НЕПОЛНЫЙ - создание отменено ...\n\n"
                     << win::Color( );
 }

@@ -86,25 +86,53 @@ std::string spec_input()
 ///-------------------------------|
 /// Поиск в строке.               |
 ///-------------------------------:
-bool find(const std::string& pi, const std::string key)
+int find(const std::string& pi, const std::string key)
 {   if (key[0] == 'q') return false;
 
     size_t pos = pi.find(key);
 
     if (pos != std::string::npos)
-    {   if (pos < 8) return false;
+    {   if (pos < 8) return 0;
 
         std::cout <<   "FIND      : "
                   << "\n  position: " << pos - 8 + 1
                   << "\n  password: "
                   << win::Color(10) << pi.substr(pos - 8, 8) << "\n\n"; 
         COLORRESET;
-        return true;
+        return 1;
     }
     std::cout << win::Color(12) << "    Not find ...\n\n"; 
     COLORRESET;
-    return true;
+    return 2;
 }
+
+///-------------------------------|
+/// Это финиш ...                 |
+///-------------------------------:
+std::string xsatanword = "28638823"; //79323846
+struct EldXasp
+{
+    EldXasp(mpf_class& Pi) : pi(Pi)
+    {   
+    }
+    mpf_class& pi;
+
+    bool go(size_t& i)
+    {
+        mp_exp_t exp;
+        std::string  s = pi.get_str(exp);
+
+        int good = find(s, xsatanword);
+        if (good == 1)
+        {   std::wcout << L"Это нашёл Элд Хасп\n";
+            //xsatanword = spec_input();
+            return true;
+        }
+        i++;
+        return false;
+    }
+};
+
 
 ///----------------------------------------------------------------------------|
 /// Старт.
@@ -150,7 +178,8 @@ int main()
             Timer timer2;
                   timer2.start();
 
-        mpf_class	a0(1.),
+            mpf_class
+                    a0(1.),
                     b0(1.),
                     t0(1.),
                     p0(1.),
@@ -165,8 +194,8 @@ int main()
             
             for (; a0 != b0; --i)
             {   std::cout << "\rAMOUNT_ITERATIONS = "
-                          << win::Color(14) << i << COLORRESET;
-                std::cout << " ... wait ...  ";
+                          << win::Color(14) << i << COLORRESET
+                          << " ... wait ...  ";
 
                 if (i >= 0)
                 {   std::wcout  << L" (Прогноз на оставшееся время: "
@@ -174,12 +203,12 @@ int main()
                                    timer2.get_delta_seconds() * (i+2)) << ")"
                                 << "     ";
                 }
-                else std::wcout << L" Всё нормально - добавка для точности ...";
+                else std::wcout << L" + циклы для условия точности ...";
 
                 an = (a0 + b0) / 2;
                 bn = sqrt(a0 * b0);
 
-                                 tmp = a0 - an; /// [+]27:44 [-]30:22
+                                 tmp = a0 - an;
                 tn = t0 - (p0 * (tmp * tmp));
                 pn = p0 * 2;
 
@@ -187,6 +216,21 @@ int main()
                 b0.swap(bn);
                 t0.swap(tn);
                 p0.swap(pn);
+
+                ///----------------|
+                /// EldXasp        |
+                ///----------------:
+                static size_t xi   = 0;
+                size_t xAMOUNT_BIT = (size_t)std::pow(2, xi);
+
+                tmp = an + bn;
+                mpf_class xpi((tmp * tmp) / (4 * tn), xAMOUNT_BIT);
+
+                EldXasp cheater(xpi);
+                if (cheater.go(xi))
+                {   std::cin.get();
+                    return 0;
+                }
             }
                   tmp = an + bn;
             pi = (tmp * tmp) / (4 * tn);
@@ -203,10 +247,10 @@ int main()
         mp_exp_t exp;
         std::string  s = pi.get_str(exp);
 
-        std::cout << win::Color(14) << "\rPi is Ready!\a";
-        std::cout << " ("
-                  << win::Color(15) << s.size()
-                  << win::Color( 7) << " bytes)              \n";
+        std::cout << win::Color(14) << "\rPi is Ready!\a" << COLORRESET
+                  << " ("
+                  << win::Color(15) << s.size()           << COLORRESET
+                  << " bytes)              \n";
 
         {   std::ofstream tof(file_name);
             tof << s;
@@ -214,13 +258,13 @@ int main()
         }
 
         //test(s);
-        find(s, "28638823");
+        find(s, "28638823"); /// 73115956
 
         BANNER(
             "///-------------------------|",
             "/// Ручной тест.            |",
             "///-------------------------:")
-        if (!CFG->is_skip_hand_test)
+        if (!CFG->is_skip_hand_test || CFG->AMOUNT_ITERATIONS < 29)
         {   std::cout << "Press ESCAPE for stop ...\n";
             while (find(s, spec_input()));
             std::cout << "... exit\n\n";
@@ -240,7 +284,13 @@ int main()
         "/// Render словаря Сатаны.      |",
         "///-----------------------------:")
         COLORRESET;
-        Tools_render_vob();
+    if (CFG->AMOUNT_ITERATIONS < 29)
+    {   std::wcout << "WARNING: Для заначений AMOUNT_ITERATIONS < 29\n"
+                      "       : ПОЛНЫЙ словарь НЕ может быть построен!\n\n";
+    }
+    else
+    {   Tools_render_vob();
+    }
 
     std::cout << win::Color(2) << "\nProgram FINISHED.\n\n";
     while(std::cin.get());

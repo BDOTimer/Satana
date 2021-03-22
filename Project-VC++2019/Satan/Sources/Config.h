@@ -12,7 +12,7 @@ struct Config
     ///-------------------|
     /// Render PI.        |
     ///-------------------:
-    int  AMOUNT_ITERATIONS;    /// 2^AMOUNT_ITERATIONS = размер ПИ в битах.
+    int  AMOUNT_ITERATIONS;    /// 2^(AMOUNT_ITERATIONS+3) = размер ПИ в битах.
     bool is_skip_hand_test;    /// 1 - Пропустить ручной тест.
 
     ///-------------------|
