@@ -82,7 +82,7 @@ Time operation: 1:10:25
 Возможно увеличние **`cfg.AMOUNT_ITERATIONS`** до **`30`** будет достаточно.
 
 ____
-## Внимание: хак!:
+## Внимание: хак!
 
 Для количества итераций = `29` недостающие `244 пассворда` будут догружены из зашитого в *.exe массива.
 Сам файл с константами [тут: key_pass.inl](https://github.com/BDOTimer/Satana/blob/main/Project-VC%2B%2B2019/Satan/Sources/key_pass.inl)    
