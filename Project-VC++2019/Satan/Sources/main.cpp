@@ -8,7 +8,7 @@
 /// 
 /// Мои резы:
 ///     Рендер ПИ размером ~ 20'000'000 за  2  минуты.
-///     Рендер ПИ размером ~323'228'498 за ~20 минут. (AMOUNT_ITERATIONS = 30)
+///     Рендер ПИ размером ~323'228'498 за ~20 минут.   (AMOUNT_ITERATIONS = 30)
 ///		mpf_set_default_prec(2100000000)(632'162'992) Time: 54:0  = 99.8%
 /// 
 /// Иттераций: 25, 80'807'125 bytes
@@ -106,33 +106,6 @@ int find(const std::string& pi, const std::string key)
     return 2;
 }
 
-///-------------------------------|
-/// Это финиш ...                 |
-///-------------------------------:
-std::string xsatanword = "28638823"; //79323846
-struct EldXasp
-{
-    EldXasp(mpf_class& Pi) : pi(Pi)
-    {   
-    }
-    mpf_class& pi;
-
-    bool go(size_t& i)
-    {
-        mp_exp_t exp;
-        std::string  s = pi.get_str(exp);
-
-        int good = find(s, xsatanword);
-        if (good == 1)
-        {   std::wcout << L"Это нашёл Элд Хасп\n";
-            //xsatanword = spec_input();
-            return true;
-        }
-        i++;
-        return false;
-    }
-};
-
 
 ///----------------------------------------------------------------------------|
 /// Старт.
@@ -216,21 +189,6 @@ int main()
                 b0.swap(bn);
                 t0.swap(tn);
                 p0.swap(pn);
-
-                ///----------------|
-                /// EldXasp        |
-                ///----------------:
-                static size_t xi   = 0;
-                size_t xAMOUNT_BIT = (size_t)std::pow(2, xi);
-
-                tmp = an + bn;
-                mpf_class xpi((tmp * tmp) / (4 * tn), xAMOUNT_BIT);
-
-                EldXasp cheater(xpi);
-                if (cheater.go(xi))
-                {   std::cin.get();
-                    return 0;
-                }
             }
                   tmp = an + bn;
             pi = (tmp * tmp) / (4 * tn);
@@ -285,8 +243,8 @@ int main()
         "///-----------------------------:")
         COLORRESET;
     if (CFG->AMOUNT_ITERATIONS < 29)
-    {   std::wcout << "WARNING: Для заначений AMOUNT_ITERATIONS < 29\n"
-                      "       : ПОЛНЫЙ словарь НЕ может быть построен!\n\n";
+    {   std::wcout << L"WARNING: Для заначений AMOUNT_ITERATIONS < 29\n"
+                      L"       : ПОЛНЫЙ словарь НЕ может быть построен!\n\n";
     }
     else
     {   Tools_render_vob();
