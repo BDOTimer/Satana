@@ -2,6 +2,7 @@
 /// Render PI.        |
 ///-------------------:
 AMOUNT_ITERATIONS  = 29 /// 2 ^ AMOUNT_ITERATIONS = размер ПИ в битах.
+is_skip_hand_test  = 0  /// 1 - Пропустить ручной тест.
 
 ///-------------------|
 /// Build vob.        |
