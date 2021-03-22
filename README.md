@@ -19,8 +19,8 @@ ____
 ____
 ## Как оно выглядит:
 
-![Screenshot in game 1](!/screenshot_01.png)
-![Screenshot in game 1](!/screenshot_02.png)
+![Screenshot in game 1](!/screenshot_1.png)
+![Screenshot in game 1](!/screenshot_2.png)
 ____
 ## Файловая схема:    
 
@@ -89,7 +89,7 @@ ____
 Данный файл был сгенерирован из данных любезно предоставленных [outoftime](https://www.cyberforum.ru/post15350704.html).    
     
 Итого:    
-![Screenshot in game 1](!/screenshot_03.png)    
+![Screenshot in game 1](!/screenshot_3.png)    
 Размер словаря 953 Mb..    
 Хак применяется только для `AMOUNT_ITERATIONS = 29`.    
 Если желаете получить последовательность числа ПИ содержащую все вхождения восьмизначных чисел **БЕЗ хака**, то для это нужно `AMOUNT_ITERATIONS = 30` и конфигурацию компа с `памятью 32 гб.`.    
