@@ -8,7 +8,7 @@
 /// 
 /// Мои резы:
 ///     Рендер ПИ размером ~ 20'000'000 за  2  минуты.
-///     Рендер ПИ размером ~323'228'498 за ~20 минут.   (AMOUNT_ITERATIONS = 30)
+///     Рендер ПИ размером ~323'228'498 за ~20 минут.   (AMOUNT_ITERATIONS = 27)
 ///		mpf_set_default_prec(2100000000)(632'162'992) Time: 54:0  = 99.8%
 /// 
 /// Иттераций: 25, 80'807'125 bytes
@@ -156,13 +156,9 @@ int main()
                     t0(1.),
                     p0(1.),
                     an(0.),
-                    bn(0.),
-                    pn(0.),
-                    tn(0.),
 
-                    tmp,
-                    ttt(2.);         t0 = t0 / 4;
-                    ttt = sqrt(ttt); b0 = b0 / ttt;
+                    tmp(2.);         t0 = t0 / 4;
+                    tmp = sqrt(tmp); b0 = b0 / tmp;
             
             for (; a0 != b0; --i)
             {   std::cout << "\rAMOUNT_ITERATIONS = "
@@ -177,20 +173,22 @@ int main()
                 }
                 else std::wcout << L" + циклы для условия точности ...";
 
-                an = (a0 + b0) / 2;
-                bn = sqrt(a0 * b0);
+                an = a0 + b0;
+                an = an / 2 ;
+                b0 = sqrt(a0 * b0);
 
-                                 tmp = a0 - an;
-                tn = t0 - (p0 * (tmp * tmp));
-                pn = p0 * 2;
+                          tmp = a0  - an ;
+                          tmp = tmp * tmp;
+                          tmp = p0  * tmp;
+                t0 = t0 - tmp;
+                p0 = p0 * 2;
 
                 a0.swap(an);
-                b0.swap(bn);
-                t0.swap(tn);
-                p0.swap(pn);
             }
-                  tmp = an + bn;
-            pi = (tmp * tmp) / (4 * tn);
+                 tmp =  an + b0;
+            pi = tmp * tmp;
+                 tmp = t0 * 4;
+            pi =  pi / tmp;
         }
         std::wcout << L"\rВсего итераций: " << AMOUNT_ITERATIONS - i 
         << "                                                                \n";
