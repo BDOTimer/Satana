@@ -1,5 +1,5 @@
 ____
-# 3.14 of Satan
+# Пароль Wi-Fi Сатаны.
 
 Тема на кибер-форуме:
 [www.cyberforum.ru](https://www.cyberforum.ru/contests/thread2787489.html)
