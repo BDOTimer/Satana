@@ -86,7 +86,9 @@ ____
 
 Для количества итераций = `29` недостающие `244 пассворда` будут догружены из зашитого в *.exe массива.
 Сам файл с константами [тут: key_pass.inl](https://github.com/BDOTimer/Satana/blob/main/Project-VC%2B%2B2019/Satan/Sources/key_pass.inl)    
-Даннай файл был сгененирован из данных любезно предоставленных [outoftime](https://www.cyberforum.ru/post15350704.html)
+Даннай файл был сгененирован из данных любезно предоставленных [outoftime](https://www.cyberforum.ru/post15350704.html).    
+    
+Итого:
 ![Screenshot in game 1](!/screenshot_03.png)    
 Размер словаря 953 Mb..
 ____
