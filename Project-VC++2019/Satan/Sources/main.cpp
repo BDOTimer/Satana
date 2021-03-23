@@ -15,12 +15,12 @@
 /// [VC++] : Time: ?:?
 /// [MSYS] : Time: ?:?
 /// 
-/// Иттераций: 23, 20'201'783 bytes
-/// [VC++] : Time: 00:04:37
-/// [MSYS] : Time: ?:?
+/// Итераций: 22 (5050447 bytes)
+/// [VC++] : Time: 0:1:1
+/// [MSYS] : Time: 0:0:18
 /// 
 /// Иттераций: 29, ... bytes
-/// [VC++] : Time: ?:?
+/// [VC++] : Time: 7:40:0
 ///----------------------------------------------------------------------------:
 #include <iostream>
 #include <string>
@@ -28,6 +28,8 @@
 #include <fstream>
 #include <gmpxx.h>
 #include <conio.h>
+
+#pragma comment(lib, "mpir-core2.lib")
 
 /// link:
 ///---------------------------------------|
@@ -157,8 +159,8 @@ int main()
                     p0(1.),
                     an(0.),
 
-                    tmp(2.);         t0 = t0 / 4;
-                    tmp = sqrt(tmp); b0 = b0 / tmp;
+                    tmp(2.);         t0 /= 4;
+                    tmp = sqrt(tmp); b0 /= tmp;
             
             for (; a0 != b0; --i)
             {   std::cout << "\rAMOUNT_ITERATIONS = "
@@ -173,22 +175,22 @@ int main()
                 }
                 else std::wcout << L" + циклы для условия точности ...";
 
-                an = a0 + b0;
-                an = an / 2 ;
-                b0 = sqrt(a0 * b0);
+                an  = a0 + b0;
+                an /=  2;
+                b0  = sqrt(a0 * b0);
 
-                          tmp = a0  - an ;
-                          tmp = tmp * tmp;
-                          tmp = p0  * tmp;
-                t0 = t0 - tmp;
-                p0 = p0 * 2;
+                           tmp  = a0  - an ;
+                           tmp *= tmp;
+                           tmp *= p0 ;
+                t0 -= tmp;
+                p0 *= 2;
 
                 a0.swap(an);
             }
-                 tmp =  an + b0;
-            pi = tmp * tmp;
-                 tmp = t0 * 4;
-            pi =  pi / tmp;
+                  tmp = an + b0;
+            pi  = tmp * tmp;
+                  tmp = t0 * 4;
+            pi /= tmp;
         }
         std::wcout << L"\rВсего итераций: " << AMOUNT_ITERATIONS - i 
         << "                                                                \n";
